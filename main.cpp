@@ -13,7 +13,7 @@ int main() {
     mpz_class m = stringToMpz(msg);
     mpz_class c = rsa.encrypt(m);
     mpz_class d = rsa.decrypt(c);
-    std::cout << "原文: " << msg << "\n解密后: " << mpzToString(d) << std::endl;
+    std::cout << "原文: " << msg<<"\n 加密后:"<<mpzToString(c) << "\n解密后: " << mpzToString(d) << std::endl;
 
     encryptFile("example.txt", "encrypted.txt", rsa);
     decryptFile("encrypted.txt", "decrypted.txt", rsa);
