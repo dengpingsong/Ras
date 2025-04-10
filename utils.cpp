@@ -5,11 +5,13 @@
 #include <gmp.h>
 #include <ctime>
 
-extern gmp_randstate_t randState;
+gmp_randclass randState(gmp_randinit_mt);  // ✅ 这是变量定义
+// 必须只有一处！
 
-mpz_class generatePrime(unsigned int bitLength) {
-    mpz_class prime;
-    mpz_urandomb(prime.get_mpz_t(), randState, bitLength);
-    mpz_nextprime(prime.get_mpz_t(), prime.get_mpz_t());
-    return prime;
+mpz_class generatePrime(unsigned int bits) {
+    return randState.get_z_bits(bits);
+}
+
+void initRand() {
+    randState.seed(static_cast<unsigned long>(time(nullptr)));
 }

@@ -1,24 +1,26 @@
 //
 // Created by psg on 25-4-10.
 //
-
-#include "rsa.h"
 #include <iostream>
-#include <string>
+#include "rsa.h"
+#include "crypto.h"
+#include "file_ops.h"
 
 int main() {
     RSA rsa(1024);
 
-    std::string input;
-    std::cout << "Enter a number to encrypt (as a string of digits): ";
-    std::cin >> input;
+    std::string msg = "Hello from RSA!";
+    mpz_class m = stringToMpz(msg);
+    mpz_class c = rsa.encrypt(m);
+    mpz_class d = rsa.decrypt(c);
+    std::cout << "原文: " << msg << "\n解密后: " << mpzToString(d) << std::endl;
 
-    mpz_class message(input);
-    mpz_class ciphertext = rsa.encrypt(message);
-    mpz_class decrypted = rsa.decrypt(ciphertext);
+    encryptFile("example.txt", "encrypted.txt", rsa);
+    decryptFile("encrypted.txt", "decrypted.txt", rsa);
 
-    std::cout << "Encrypted: " << ciphertext << std::endl;
-    std::cout << "Decrypted: " << decrypted << std::endl;
+    signFile("example.txt", "example.sig", rsa);
+    bool valid = verifyFile("example.txt", "example.sig", rsa);
+    std::cout << "签名验证: " << (valid ? "成功" : "失败") << std::endl;
 
     return 0;
 }

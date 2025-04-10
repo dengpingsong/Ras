@@ -1,7 +1,6 @@
 //
 // Created by psg on 25-4-10.
 //
-
 #ifndef RSA_H
 #define RSA_H
 
@@ -9,21 +8,18 @@
 
 class RSA {
 public:
-    RSA(unsigned int bitLength = 1024);
-    void generateKeys();
-    mpz_class encrypt(const mpz_class& message);
-    mpz_class decrypt(const mpz_class& ciphertext);
+    RSA(unsigned int keySize = 1024);
 
-    mpz_class getPublicKeyE() const;
-    mpz_class getPublicKeyN() const;
+    mpz_class encrypt(const mpz_class& message) const;
+    mpz_class decrypt(const mpz_class& cipher) const;
+
+    mpz_class getPublicKeyE() const { return e; }
+    mpz_class getPublicKeyN() const { return n; }
 
 private:
-    mpz_class p, q, n, phi;
-    mpz_class e, d;
-    unsigned int keyLength;
+    mpz_class p, q, n, phi, e, d;
 
-    void generatePrimes();
-    void calculateKeys();
+    void generateKeys(unsigned int keySize);
 };
 
 #endif // RSA_H

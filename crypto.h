@@ -1,7 +1,3 @@
-//
-// Created by psg on 25-4-10.
-//
-
 #ifndef CRYPTO_H
 #define CRYPTO_H
 
@@ -16,7 +12,7 @@ std::string mpzToString(const mpz_class& num);
 std::string base64Encode(const std::string& input);
 std::string base64Decode(const std::string& input);
 
-// SHA256 哈希（macOS 使用 CommonCrypto）
+// SHA256 哈希
 std::string sha256(const std::string& input);
 
 #endif // CRYPTO_H
